@@ -1,13 +1,11 @@
 package com.example.hiltdependencyinjection
 
-import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
-import android.util.Log
-import androidx.fragment.app.Fragment
+import android.widget.TextView
+import androidx.appcompat.app.AppCompatActivity
+import com.google.gson.Gson
 import dagger.hilt.android.AndroidEntryPoint
-import dagger.hilt.android.scopes.ActivityScoped
 import javax.inject.Inject
-import javax.inject.Singleton
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -24,20 +22,40 @@ class MainActivity : AppCompatActivity() {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
 
-        Log.d(TAG, someClass.doAThing())
+        findViewById<TextView>(R.id.titleTextView).apply {
+            text = someClass.doAThing()
+        }
     }
 }
 
-@AndroidEntryPoint
-class MyFragment: Fragment() {
 
-    @Inject
-    lateinit var someClass: SomeClass
+class SomeClass
+@Inject
+constructor(
+    private val someInterfaceOneImpl: SomeInterfaceOne,
+    private val someInterfaceTwoImpl: SomeInterfaceTwo
+){
+    fun doAThing(): String{
+        return "Look I got: ${someInterfaceOneImpl.getAThing()} and ${someInterfaceTwoImpl.getAThing()}"
+    }
 }
 
+class SomeInterfaceOneImpl @Inject constructor(): SomeInterfaceOne {
+    override fun getAThing() : String{
+        return "A Thing One"
+    }
+}
 
-@ActivityScoped
-class SomeClass @Inject constructor() {
+class SomeInterfaceTwoImpl @Inject constructor(private val gson: Gson): SomeInterfaceTwo {
+    override fun getAThing() : String{
+        return "A Thing Two + ${gson.hashCode()}"
+    }
+}
 
-    fun doAThing(): String = "Look I did a thing!"
+interface SomeInterfaceOne{
+    fun getAThing(): String
+}
+
+interface SomeInterfaceTwo{
+    fun getAThing(): String
 }
