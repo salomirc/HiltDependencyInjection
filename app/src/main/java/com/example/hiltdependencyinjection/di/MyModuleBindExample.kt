@@ -1,7 +1,7 @@
 package com.example.hiltdependencyinjection.di
 
-import com.example.hiltdependencyinjection.SomeInterfaceOne
-import com.example.hiltdependencyinjection.SomeInterfaceOneImpl
+import com.example.hiltdependencyinjection.dependencies.SomeInterfaceOne
+import com.example.hiltdependencyinjection.dependencies.SomeInterfaceOneImpl
 import dagger.Binds
 import dagger.Module
 import dagger.hilt.InstallIn

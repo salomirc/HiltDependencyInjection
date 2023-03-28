@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">HiltDependencyInjection</string>
+    <string name="main_text">%1$s\n%2$s</string>
 </resources>

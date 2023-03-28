@@ -1,12 +1,12 @@
 package com.example.hiltdependencyinjection.di
 
-import com.example.hiltdependencyinjection.SomeInterfaceTwo
-import com.example.hiltdependencyinjection.SomeInterfaceTwoImpl
+import com.example.hiltdependencyinjection.dependencies.*
 import com.google.gson.Gson
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
 import dagger.hilt.components.SingletonComponent
+import javax.inject.Qualifier
 import javax.inject.Singleton
 
 
@@ -25,4 +25,26 @@ object MyModuleProvidesExample {
     fun provideGson(): Gson {
         return Gson()
     }
+
+    @Impl1
+    @Singleton
+    @Provides
+    fun provideSomeInterfaceThree1(): SomeInterfaceThree {
+        return SomeInterfaceThreeImplOne()
+    }
+
+    @Impl2
+    @Singleton
+    @Provides
+    fun provideSomeInterfaceThree2(): SomeInterfaceThree {
+        return SomeInterfaceThreeImplTwo()
+    }
 }
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Impl1
+
+@Qualifier
+@Retention(AnnotationRetention.BINARY)
+annotation class Impl2
