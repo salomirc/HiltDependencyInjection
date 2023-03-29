@@ -20,12 +20,6 @@ object MyModuleProvidesExample {
         return SomeInterfaceTwoImpl(gson)
     }
 
-    @Singleton
-    @Provides
-    fun provideGson(): Gson {
-        return Gson()
-    }
-
     @Impl1
     @Singleton
     @Provides
